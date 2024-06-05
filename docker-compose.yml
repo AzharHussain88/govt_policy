@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  drupal:
+    build: .
+    image: my_drupal_image
+    container_name: drupal
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    container_name: drupal_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: drupal_govt_policy
+      MYSQL_USER: dgp
+      MYSQL_PASSWORD: drupgovpol
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
